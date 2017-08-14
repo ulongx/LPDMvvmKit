@@ -240,6 +240,30 @@ NS_ASSUME_NONNULL_BEGIN
   [_loadingOverlay removeFromSuperview];
 }
 
+#pragma mark - subscribe retry signal
+
+- (void)subscribeRetryLoadingSignal {
+    @weakify(self);
+    [[[RACObserve(self.viewModel, needRetryLoading) skip:1] deliverOnMainThread] subscribeNext:^(NSNumber *needRetryLoading) {
+        @strongify(self);
+        if ([needRetryLoading boolValue]) {
+            [self showRetryView];
+        } else {
+            [self hideRetryView];
+        }
+    }];
+    
+}
+
+- (void)showRetryView {
+    
+}
+
+- (void)hideRetryView {
+    
+}
+
+
 #pragma mark - subscribe toast signal
 
 - (void)subscribeSuccessSubject {
@@ -328,6 +352,7 @@ NS_ASSUME_NONNULL_BEGIN
 	 @strongify(self);
 	 BOOL empty = [value integerValue];
 	 [self showEmpty:empty withDescription:nil];
+      
   }];
   [[[self.viewModel rac_signalForSelector:@selector(setEmptyWithDescription:)
 									  fromProtocol:@protocol(LPDViewModelEmptyProtocol)] deliverOnMainThread]
@@ -354,7 +379,6 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark - subscribe child ViewModel signal
-
 
 - (void)subscribeAddChildViewModelSignal {
     @weakify(self);

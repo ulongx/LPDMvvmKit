@@ -11,7 +11,6 @@
 @protocol LPDViewEmptyProtocol <NSObject>
 
 @optional
-- (void)setCustomEmptyView:(UIView *_Nullable)customEmptyView;
 
 - (void)hideEmptyView;
 

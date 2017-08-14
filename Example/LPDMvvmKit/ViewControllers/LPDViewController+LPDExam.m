@@ -30,6 +30,7 @@
   if (prevView) {
     return;
   }
+  
   UIView *emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 170)];
   emptyView.tag = 888888;
   emptyView.backgroundColor = [UIColor clearColor];
